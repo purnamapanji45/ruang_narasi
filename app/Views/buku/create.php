@@ -2,7 +2,7 @@
 <?= $this->section('content') ?>
 <div class="container p-4">
     <div class="card border-0 shadow-sm p-4">
-        <h4 class="fw-bold mb-4">Tambah Buku Baru</h4>
+        <h4 class="fw-bold mb-4">Tambah Buku Baru Ya</h4>
         <form action="<?= base_url('buku/store') ?>" method="post" enctype="multipart/form-data">
             <div class="row">
                 <div class="col-md-6 mb-3">
