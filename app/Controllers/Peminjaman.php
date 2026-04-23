@@ -118,8 +118,9 @@ class Peminjaman extends BaseController
     public function cetak_nota($id)
     {
         $pinjam = $this->pinjamModel
-            ->select('peminjaman.*, buku.judul')
+            ->select('peminjaman.*, buku.judul, users.nama AS nama_peminjam')
             ->join('buku', 'buku.id_book = peminjaman.id_book')
+            ->join('users', 'users.id = peminjaman.id_user')
             ->find($id);
 
         if (!$pinjam) {

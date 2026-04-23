@@ -6,7 +6,10 @@ use CodeIgniter\Model;
 
 class RakModel extends Model
 {
-    protected $table            = 'rak';
-    protected $primaryKey       = 'id_rak';
-    protected $allowedFields    = ['nama_rak', 'lokasi']; // Kolom yang boleh diisi
+    protected $table      = 'rak';
+    protected $primaryKey = 'id_rak';
+
+    protected $allowedFields = ['nama_rak', 'keterangan'];
+
+    protected $useTimestamps = false;
 }

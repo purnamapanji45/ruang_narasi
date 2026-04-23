@@ -32,19 +32,13 @@ class Buku extends BaseController
     // 2. Form Tambah Buku
     public function create()
     {
-        // Ambil data dari tabel relasi untuk dropdown es
-        $katModel = new KategoriModel();
-        $penModel = new PenulisModel();
-        $penerModel = new PenerbitModel();
-        $rakModel = new RakModel();
+        $db = \Config\Database::connect();
 
-        $data = [
-            'title' => 'Tambah Buku Baru',
-            'kategori' => $katModel->findAll(),
-            'penulis'  => $penModel->findAll(),
-            'penerbit' => $penerModel->findAll(),
-            'rak'      => $rakModel->findAll(),
-        ];
+        $data['kategori'] = $db->table('kategori')->get()->getResultArray();
+        $data['penulis'] = $db->table('penulis')->get()->getResultArray();
+        $data['penerbit'] = $db->table('penerbit')->get()->getResultArray();
+        $data['rak'] = $db->table('rak')->get()->getResultArray();
+
         return view('buku/create', $data);
     }
 
@@ -76,29 +70,39 @@ class Buku extends BaseController
     // 4. Detail Buku
     public function detail($id)
     {
-        $data = [
-            'title' => 'Detail Buku',
-            'buku'  => $this->bukuModel->find($id)
-        ];
+        $db = \Config\Database::connect();
+
+        $data['buku'] = $db->table('buku')
+            ->select('
+            buku.*, 
+            kategori.nama_kategori, 
+            penulis.nama_penulis, 
+            penerbit.nama_penerbit, 
+            rak.nama_rak
+        ')
+            ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left')
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
+            ->join('penerbit', 'penerbit.id_penerbit = buku.id_penerbit', 'left')
+            ->join('rak', 'rak.id_rak = buku.id_rak', 'left')
+            ->where('buku.id_book', $id)
+            ->get()
+            ->getRowArray();
+
         return view('buku/detail', $data);
     }
 
     // 5. Form Edit Buku
     public function edit($id)
     {
-        $katModel = new \App\Models\KategoriModel();
-        $penModel = new \App\Models\PenulisModel();
-        $penerModel = new \App\Models\PenerbitModel();
-        $rakModel = new \App\Models\RakModel();
+        $db = \Config\Database::connect();
 
-        $data = [
-            'title' => 'Edit Buku',
-            'buku'  => $this->bukuModel->find($id),
-            'kategori' => $katModel->findAll(),
-            'penulis'  => $penModel->findAll(),
-            'penerbit' => $penerModel->findAll(),
-            'rak'      => $rakModel->findAll(),
-        ];
+        $data['buku'] = $db->table('buku')->where('id_book', $id)->get()->getRowArray();
+
+        $data['kategori'] = $db->table('kategori')->get()->getResultArray();
+        $data['penulis'] = $db->table('penulis')->get()->getResultArray();
+        $data['penerbit'] = $db->table('penerbit')->get()->getResultArray();
+        $data['rak'] = $db->table('rak')->get()->getResultArray();
+
         return view('buku/edit', $data);
     }
 

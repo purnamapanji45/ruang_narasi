@@ -13,28 +13,50 @@ class Rak extends BaseController
         $this->rakModel = new RakModel();
     }
 
+    // ================= INDEX =================
     public function index()
     {
-        $data = [
-            'title' => 'Manajemen Rak',
-            'rak'   => $this->rakModel->findAll()
-        ];
+        $data['rak'] = $this->rakModel->findAll();
         return view('rak/index', $data);
     }
 
-    public function simpan()
+    // ================= CREATE =================
+    public function create()
     {
-        $this->rakModel->save([
-            'nama_rak' => $this->request->getVar('nama_rak'),
-            'lokasi'   => $this->request->getVar('lokasi'),
-        ]);
-
-        return redirect()->to('/rak')->with('pesan', 'Data rak berhasil ditambahkan.');
+        return view('rak/create');
     }
 
-    public function hapus($id)
+    public function store()
+    {
+        $this->rakModel->save([
+            'nama_rak'   => $this->request->getPost('nama_rak'),
+            'keterangan' => $this->request->getPost('keterangan'),
+        ]);
+
+        return redirect()->to('/rak')->with('success', 'Data berhasil ditambahkan');
+    }
+
+    // ================= EDIT =================
+    public function edit($id)
+    {
+        $data['rak'] = $this->rakModel->find($id);
+        return view('rak/edit', $data);
+    }
+
+    public function update($id)
+    {
+        $this->rakModel->update($id, [
+            'nama_rak'   => $this->request->getPost('nama_rak'),
+            'keterangan' => $this->request->getPost('keterangan'),
+        ]);
+
+        return redirect()->to('/rak')->with('success', 'Data berhasil diupdate');
+    }
+
+    // ================= DELETE =================
+    public function delete($id)
     {
         $this->rakModel->delete($id);
-        return redirect()->to('/rak')->with('pesan', 'Data rak berhasil dihapus.');
+        return redirect()->to('/rak')->with('success', 'Data berhasil dihapus');
     }
 }

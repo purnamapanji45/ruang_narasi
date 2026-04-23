@@ -120,13 +120,13 @@
 
                                         <a href="<?= base_url('peminjaman/nota/' . $p['id_peminjaman']); ?>"
                                             class="btn btn-sm btn-info text-white">
-                                            <i class="fas fa-print"></i>
+                                            <i class="bi bi-printer me-3"></i>
                                         </a>
 
                                         <a href="<?= base_url('peminjaman/delete/' . $p['id_peminjaman']); ?>"
                                             class="btn btn-sm btn-danger"
                                             onclick="return confirm('Hapus data ini?')">
-                                            <i class="fas fa-trash"></i>
+                                            <i class="bi bi-trash me-3"></i>
                                         </a>
 
                                     </div>

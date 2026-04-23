@@ -76,9 +76,15 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         // ======================
         // RAK
         // ======================
-        $routes->get('rak', 'Rak::index');
-        $routes->post('rak/simpan', 'Rak::simpan');
-        $routes->get('rak/hapus/(:num)', 'Rak::hapus/$1');
+        $routes->group('rak', function ($routes) {
+            $routes->get('/', 'Rak::index');
+            $routes->get('create', 'Rak::create');
+            $routes->post('store', 'Rak::store');
+            $routes->get('detail/(:num)', 'Rak::detail/$1');
+            $routes->get('edit/(:num)', 'Rak::edit/$1');
+            $routes->post('update/(:num)', 'Rak::update/$1');
+            $routes->get('delete/(:num)', 'Rak::delete/$1');
+        });
 
 
         // ======================

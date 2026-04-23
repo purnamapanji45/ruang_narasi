@@ -35,7 +35,7 @@
                 <li class="nav-item mb-2">
                     <a href="<?= base_url('rak') ?>"
                         class="nav-link <?= (uri_string() == 'rak') ? 'active bg-warning text-dark fw-bold' : '' ?> py-3 px-4">
-                        <i class="fas fa-th-large"></i> Manajemen Rak
+                        <i class="bi bi-book me-3"></i> Rak
                     </a>
                 </li>
             <?php endif; ?>

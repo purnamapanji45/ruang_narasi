@@ -23,12 +23,28 @@
                     <hr>
                     <table class="table table-borderless mt-3">
                         <tr>
-                            <th width="150">Penulis</th>
-                            <td>: <?= $buku['penulis'] ?? $buku['id_penulis'] ?? 'Tidak diketahui'; ?></td>
+                            <th width="180">Judul</th>
+                            <td>: <?= $buku['judul']; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Kategori</th>
+                            <td>: <?= $buku['nama_kategori'] ?? 'Tidak ada'; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Penulis</th>
+                            <td>: <?= $buku['nama_penulis'] ?? 'Tidak diketahui'; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Penerbit</th>
+                            <td>: <?= $buku['nama_penerbit'] ?? 'Tidak diketahui'; ?></td>
+                        </tr>
+                        <tr>
+                            <th>Rak</th>
+                            <td>: <?= $buku['nama_rak'] ?? 'Tidak ada'; ?></td>
                         </tr>
                         <tr>
                             <th>Tahun Terbit</th>
-                            <td>: <?= $buku['tahun'] ?? $buku['tahun_terbit'] ?? 'Data tidak tersedia'; ?></td>
+                            <td>: <?= $buku['tahun_terbit']; ?></td>
                         </tr>
                         <tr>
                             <th>Stok Buku</th>
