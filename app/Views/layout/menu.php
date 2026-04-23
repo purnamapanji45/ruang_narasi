@@ -31,23 +31,16 @@
                     <i class="bi bi-book me-3"></i> Data Buku
                 </a>
             </li>
-            <?php if (session()->get('role') == 'admin') : ?>
-                <li class="nav-item mb-2">
-                    <a href="<?= base_url('rak') ?>"
-                        class="nav-link <?= (uri_string() == 'rak') ? 'active bg-warning text-dark fw-bold' : '' ?> py-3 px-4">
-                        <i class="fas fa-th-large"></i> Manajemen Rak
-                    </a>
-                </li>
-            <?php endif; ?>
-            <li class="nav-item mb-2">
-                <a href="<?= base_url('peminjaman') ?>"
-                    class="nav-link <?= (uri_string() == 'peminjaman') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
-                    <i class="bi bi-arrow-left-right me-3"></i> Peminjaman
-                </a>
+
+            </a>
             </li>
-
         <?php endif; ?>
-
+        <li class="nav-item mb-2">
+            <a href="<?= base_url('peminjaman') ?>"
+                class="nav-link <?= (uri_string() == 'peminjaman') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                <i class="bi bi-arrow-left-right me-3"></i> Peminjaman
+            </a>
+        </li>
         <!-- ADMIN ONLY -->
         <?php if (session()->get('role') == 'admin') : ?>
 

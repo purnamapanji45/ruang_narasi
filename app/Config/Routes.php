@@ -74,11 +74,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->group('', ['filter' => 'role:admin,petugas'], function ($routes) {
 
         // ======================
-        // RAK
-        // ======================
-        $routes->get('rak', 'Rak::index');
-        $routes->post('rak/simpan', 'Rak::simpan');
-        $routes->get('rak/hapus/(:num)', 'Rak::hapus/$1');
+
 
 
         // ======================

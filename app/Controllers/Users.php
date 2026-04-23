@@ -167,4 +167,9 @@ class Users extends BaseController
 
         return view('users/profile', $data); // Pastikan file view ini sudah ada
     }
+    public function setting()
+    {
+        // Ini akan memanggil file view yang ada di folder Views/users/setting.php
+        return view('users/setting');
+    }
 }
