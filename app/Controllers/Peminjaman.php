@@ -309,4 +309,31 @@ class Peminjaman extends BaseController
             'denda'  => $total_denda // Sekarang ini tidak akan merah lagi
         ]);
     }
+    public function profile()
+    {
+        $userId = session()->get('id');
+
+        $peminjamanModel = new PeminjamanModel();
+
+        // Hitung jumlah buku yang pernah dipinjam
+        $totalBuku = $peminjamanModel
+            ->where('id_user', $userId)
+            ->countAllResults();
+
+        // Ambil data buku yang dipinjam (JOIN ke buku)
+        $bukuSaya = $peminjamanModel
+            ->select('buku.*, peminjaman.tanggal_pinjam')
+            ->join('buku', 'buku.id_buku = peminjaman.id_buku')
+            ->where('peminjaman.id_user', $userId)
+            ->findAll();
+
+        $data = [
+            'user' => $this->userModel->find($userId),
+            'totalBuku' => $totalBuku,
+            'poin' => $totalBuku * 10, // contoh: 1 buku = 10 poin
+            'bukuSaya' => $bukuSaya
+        ];
+
+        return view('users/profile', $data);
+    }
 }

@@ -31,23 +31,37 @@
                     <i class="bi bi-book me-3"></i> Data Buku
                 </a>
             </li>
-            <?php if (session()->get('role') == 'admin') : ?>
-                <li class="nav-item mb-2">
-                    <a href="<?= base_url('rak') ?>"
-                        class="nav-link <?= (uri_string() == 'rak') ? 'active bg-warning text-dark fw-bold' : '' ?> py-3 px-4">
-                        <i class="bi bi-book me-3"></i> Rak
-                    </a>
-                </li>
-            <?php endif; ?>
+
+            <!-- ✅ KATEGORI -->
             <li class="nav-item mb-2">
-                <a href="<?= base_url('peminjaman') ?>"
-                    class="nav-link <?= (uri_string() == 'peminjaman') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
-                    <i class="bi bi-arrow-left-right me-3"></i> Peminjaman
+                <a href="<?= base_url('kategori') ?>"
+                    class="nav-link <?= (uri_string() == 'kategori') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                    <i class="bi bi-tags me-3"></i> Kategori
                 </a>
             </li>
 
-        <?php endif; ?>
+            <!-- ✅ PENULIS -->
+            <li class="nav-item mb-2">
+                <a href="<?= base_url('penulis') ?>"
+                    class="nav-link <?= (uri_string() == 'penulis') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                    <i class="bi bi-person me-3"></i> Penulis
+                </a>
+            </li>
 
+            <!-- ✅ PENERBIT -->
+            <li class="nav-item mb-2">
+                <a href="<?= base_url('penerbit') ?>"
+                    class="nav-link <?= (uri_string() == 'penerbit') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                    <i class="bi bi-building me-3"></i> Penerbit
+                </a>
+            </li>
+            <li class="nav-item mb-2">
+                <a href="<?= base_url('rak') ?>"
+                    class="nav-link <?= (uri_string() == 'rak') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                    <i class="bi bi-building me-3"></i> rak
+                </a>
+            </li>
+        <?php endif; ?>
         <!-- ADMIN ONLY -->
         <?php if (session()->get('role') == 'admin') : ?>
 

@@ -38,11 +38,14 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('katalog', 'Buku::index');
 
     // ======================
-    // PROFILE
+    // PROFILE & SETTING
     // ======================
     $routes->get('profile', 'Users::profile');
-    $routes->get('setting', 'Users::setting');
-    $routes->post('users/update_profile', 'Users::update_profile');
+
+    // SETTING (FIX)
+    $routes->get('setting', 'Setting::index');
+    $routes->post('setting/update', 'Setting::update');
+    $routes->post('setting/password', 'Setting::password');
 
 
     // ======================
@@ -72,7 +75,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // ADMIN + PETUGAS
     // ==========================
     $routes->group('', ['filter' => 'role:admin,petugas'], function ($routes) {
-
+        $routes->get('kategori', 'Kategori::index');
+        $routes->get('penulis', 'Penulis::index');
+        $routes->get('penerbit', 'Penerbit::index');
         // ======================
         // RAK
         // ======================
@@ -110,7 +115,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
             $routes->post('store', 'Users::store');         // simpan user baru
             $routes->get('edit/(:num)', 'Users::edit/$1');  // form edit
             $routes->post('update/(:num)', 'Users::update/$1'); // update data
-            $routes->get('delete/(:num)', 'Users::delete/$1');  // hapus user
+
         });
 
 
