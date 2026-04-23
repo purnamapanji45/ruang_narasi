@@ -78,6 +78,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         $routes->get('kategori', 'Kategori::index');
         $routes->get('penulis', 'Penulis::index');
         $routes->get('penerbit', 'Penerbit::index');
+        // ===================
         // ======================
         // RAK
         // ======================

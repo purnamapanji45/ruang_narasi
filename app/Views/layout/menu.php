@@ -32,7 +32,6 @@
                 </a>
             </li>
 
-            <!-- ✅ KATEGORI -->
             <li class="nav-item mb-2">
                 <a href="<?= base_url('kategori') ?>"
                     class="nav-link <?= (uri_string() == 'kategori') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
@@ -40,7 +39,6 @@
                 </a>
             </li>
 
-            <!-- ✅ PENULIS -->
             <li class="nav-item mb-2">
                 <a href="<?= base_url('penulis') ?>"
                     class="nav-link <?= (uri_string() == 'penulis') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
@@ -48,20 +46,29 @@
                 </a>
             </li>
 
-            <!-- ✅ PENERBIT -->
             <li class="nav-item mb-2">
                 <a href="<?= base_url('penerbit') ?>"
                     class="nav-link <?= (uri_string() == 'penerbit') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
                     <i class="bi bi-building me-3"></i> Penerbit
                 </a>
             </li>
+
             <li class="nav-item mb-2">
                 <a href="<?= base_url('rak') ?>"
                     class="nav-link <?= (uri_string() == 'rak') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
-                    <i class="bi bi-building me-3"></i> rak
+                    <i class="bi bi-archive me-3"></i> Rak
                 </a>
             </li>
+
+            <li class="nav-item mb-2">
+                <a href="<?= base_url('peminjaman') ?>"
+                    class="nav-link <?= (uri_string() == 'peminjaman') ? 'active bg-warning text-dark fw-bold' : 'text-white-50' ?> py-3 px-4">
+                    <i class="bi bi-arrow-left-right me-3"></i> Peminjaman
+                </a>
+            </li>
+
         <?php endif; ?>
+
         <!-- ADMIN ONLY -->
         <?php if (session()->get('role') == 'admin') : ?>
 
@@ -116,8 +123,8 @@
     </div>
 
 </div>
+
 <style>
-    /* CSS Tambahan khusus Sidebar biar lebih JEDER */
     .sidebar .nav-link {
         transition: all 0.3s ease;
         border-radius: 12px;
@@ -133,7 +140,6 @@
         box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
     }
 
-    /* Garis HR Custom */
     hr {
         border-color: rgba(255, 255, 255, 0.1);
     }
