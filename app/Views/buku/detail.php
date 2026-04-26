@@ -64,23 +64,27 @@
                     </div>
 
                     <div class="mt-4 d-grid gap-2 d-md-block">
+
                         <?php if ($buku['stok'] > 0) : ?>
-                            <a href="<?= base_url('peminjaman/create'); ?>" class="btn btn-primary btn-lg shadow">
+                            <a href="<?= base_url('peminjaman/ajukan/' . $buku['id_book']) ?>"
+                                class="btn btn-primary btn-lg shadow">
                                 <i class="fas fa-bookmark"></i> Pinjam Buku Sekarang
                             </a>
                         <?php else : ?>
-                            <button class="btn btn-danger btn-lg" disabled>
-                                <i class="fas fa-times"></i> Stok Habis
+                            <button class="btn btn-secondary btn-lg" disabled>
+                                Stok Habis
                             </button>
                         <?php endif; ?>
 
-                        <a href="<?= base_url('buku/edit/' . $buku['id_book']); ?>" class="btn btn-warning btn-lg shadow text-white">
-                            <i class="fas fa-edit"></i> Edit Data
-                        </a>
                     </div>
+
+                    <a href="<?= base_url('buku/edit/' . $buku['id_book']); ?>" class="btn btn-warning btn-lg shadow text-white">
+                        <i class="fas fa-edit"></i> Edit Data
+                    </a>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <?= $this->endSection(); ?>

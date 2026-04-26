@@ -21,9 +21,13 @@
                 <td><?= $k['nama_kategori'] ?></td>
                 <td>
                     <a href="<?= base_url('kategori/edit/' . $k['id_kategori']) ?>" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="<?= base_url('kategori/delete/' . $k['id_kategori']) ?>"
-                        class="btn btn-sm btn-danger"
-                        onclick="return confirm('Yakin hapus?')">Hapus</a>
+                    <form action="<?= base_url('kategori/delete/' . $k['id_kategori']) ?>" method="post" style="display:inline;">
+                        <?= csrf_field(); ?>
+                        <button type="submit" class="btn btn-sm btn-danger"
+                            onclick="return confirm('Yakin hapus?')">
+                            Hapus
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -18,9 +18,13 @@
                 <td><?= $p['nama_penulis'] ?></td>
                 <td>
                     <a href="<?= base_url('penulis/edit/' . $p['id_penulis']) ?>" class="btn btn-sm btn-primary">Edit</a>
-                    <a href="<?= base_url('penulis/delete/' . $p['id_penulis']) ?>"
-                        class="btn btn-sm btn-danger"
-                        onclick="return confirm('Yakin hapus?')">Hapus</a>
+
+                    <form action="<?= base_url('penulis/delete/' . $p['id_penulis']) ?>" method="post" style="display:inline;">
+                        <?= csrf_field() ?>
+                        <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Yakin hapus?')">
+                            Hapus
+                        </button>
+                    </form>
                 </td>
             </tr>
         <?php endforeach; ?>

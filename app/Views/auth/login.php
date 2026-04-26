@@ -89,6 +89,9 @@
 
         <div class="mt-4 text-center">
             <p>Belum punya akun? <a href="<?= base_url('/daftar'); ?>">Daftar Baru</a></p>
+            <a href="<?= base_url('restore') ?>" class="btn btn-outline-danger btn-sm">
+                <i class="bi bi-database"></i> Restore DB
+            </a>
         </div>
     </div>
 

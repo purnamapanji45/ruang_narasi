@@ -13,6 +13,10 @@
                     <label>Judul Buku</label>
                     <input type="text" name="judul" class="form-control" required>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label>Sinopsis / Deskripsi :</label>
+                    <input type="text" name="sinopsis" class="form-control" required>
+                </div>
 
                 <!-- KATEGORI -->
                 <div class="col-md-6 mb-3">

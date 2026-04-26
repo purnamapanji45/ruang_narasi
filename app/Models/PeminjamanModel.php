@@ -36,6 +36,23 @@ class PeminjamanModel extends Model
     /**
      * Builder untuk kebutuhan search, filter, pagination
      */
+    public function cetak_nota($id)
+    {
+        $peminjamanModel = new \App\Models\PeminjamanModel();
+
+        $data['peminjaman'] = $peminjamanModel
+            ->select('peminjaman.*, buku.judul, users.nama')
+            ->join('users', 'users.id = peminjaman.id_user')
+            ->join('buku', 'buku.id_book = peminjaman.id_book')
+            ->where('peminjaman.id_peminjaman', $id)
+            ->first();
+
+        if (!$data['peminjaman']) {
+            throw new \CodeIgniter\Exceptions\PageNotFoundException('Data tidak ditemukan');
+        }
+
+        return view('peminjaman/nota', $data);
+    }
     public function getPeminjamanQuery($keyword = null, $status = null)
     {
         $builder = $this->select('peminjaman.*, buku.judul, users.nama AS nama_peminjam')

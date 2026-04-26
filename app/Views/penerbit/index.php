@@ -5,7 +5,7 @@
 <table class="table table-bordered">
 
 </table>
-<button class="btn btn-primary mb-3">Tambah Penerbit</button>
+<a href="<?= base_url('penerbit/create'); ?>" class="btn btn-primary mb-3">Tambah Penerbit</a>
 
 <table class="table table-bordered">
     <thead>
@@ -26,12 +26,13 @@
                 <td><?= $p['alamat_penerbit']; ?></td>
                 <td><?= $p['telepon_penerbit']; ?></td>
                 <td>
-                    <a href="/penerbit/edit/<?= $p['id']; ?>" class="btn btn-sm btn-warning">Edit</a>
+                    <a href="<?= base_url('penerbit/edit/' . $p['id']); ?>" class="btn btn-sm btn-warning">Edit</a>
 
-                    <form action="/penerbit/delete/<?= $p['id']; ?>" method="post" style="display:inline;">
+                    <form action="<?= base_url('penerbit/delete/' . $p['id']); ?>" method="post" style="display:inline;">
                         <?= csrf_field(); ?>
                         <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Hapus data?')">Hapus</button>
                     </form>
+                </td>
                 </td>
             </tr>
         <?php endforeach; ?>

@@ -113,7 +113,9 @@
         <?php endif; ?>
 
     </ul>
-
+    <?php if (session()->get('role') == 'admin') : ?>
+        <a href="<?= base_url('/backup') ?>" class="btn btn-success">Backup Database</a>
+    <?php endif; ?>
     <!-- LOGOUT -->
     <div class="mt-auto px-3 pb-4">
         <a href="<?= base_url('logout') ?>"
