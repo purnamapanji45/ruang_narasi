@@ -35,7 +35,7 @@ CREATE TABLE `buku` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_book`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `buku` (
 
 LOCK TABLES `buku` WRITE;
 /*!40000 ALTER TABLE `buku` DISABLE KEYS */;
-INSERT INTO `buku` VALUES (5,'Atomic habit',2,1,1,2,2018,81,'1776968502_5c3d3efdd962cdb3dc8b.jpg','2026-04-21 07:25:52','2026-04-25 17:15:00');
+INSERT INTO `buku` VALUES (5,'Atomic habit',2,1,1,2,2018,82,'1776968502_5c3d3efdd962cdb3dc8b.jpg','2026-04-21 07:25:52','2026-04-26 09:43:31'),(9,'Bandung After Rain',5,4,3,2,2017,122,'1777192645_5b5489ce27bcc2ce4e2b.jpg','2026-04-26 08:37:25','2026-04-26 10:13:04');
 /*!40000 ALTER TABLE `buku` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -59,7 +59,7 @@ CREATE TABLE `kategori` (
   `id_kategori` int(11) NOT NULL AUTO_INCREMENT,
   `nama_kategori` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_kategori`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -68,7 +68,7 @@ CREATE TABLE `kategori` (
 
 LOCK TABLES `kategori` WRITE;
 /*!40000 ALTER TABLE `kategori` DISABLE KEYS */;
-INSERT INTO `kategori` VALUES (1,'Self Improvement.'),(2,'fiksi'),(4,'3333');
+INSERT INTO `kategori` VALUES (1,'Self Improvement.'),(2,'fiksi'),(5,'Novel');
 /*!40000 ALTER TABLE `kategori` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -94,7 +94,7 @@ CREATE TABLE `peminjaman` (
   PRIMARY KEY (`id_peminjaman`),
   KEY `fk_user` (`id_user`),
   CONSTRAINT `fk_user` FOREIGN KEY (`id_user`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -103,7 +103,7 @@ CREATE TABLE `peminjaman` (
 
 LOCK TABLES `peminjaman` WRITE;
 /*!40000 ALTER TABLE `peminjaman` DISABLE KEYS */;
-INSERT INTO `peminjaman` VALUES (69,5,NULL,'2026-04-25','2026-04-27','kembali',27,0,'manual',NULL,'belum'),(70,5,NULL,'2026-04-25','2026-04-27','dipinjam',21,0,'manual',NULL,'belum'),(71,5,NULL,'2026-04-25','2026-04-30','kembali',20,0,'manual',NULL,'belum');
+INSERT INTO `peminjaman` VALUES (70,5,NULL,'2026-04-25','2026-04-27','kembali',21,0,'manual',NULL,'belum'),(71,5,NULL,'2026-04-25','2026-04-30','kembali',20,0,'manual',NULL,'belum'),(72,9,NULL,'2026-04-26','2026-05-03','kembali',30,0,'manual',NULL,'belum');
 /*!40000 ALTER TABLE `peminjaman` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `penerbit` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `penerbit` (
 
 LOCK TABLES `penerbit` WRITE;
 /*!40000 ALTER TABLE `penerbit` DISABLE KEYS */;
-INSERT INTO `penerbit` VALUES (1,'Bentang Pustaka\r\n','Yogyakarta',NULL,'2026-04-25 22:38:18','2026-04-25 22:38:18');
+INSERT INTO `penerbit` VALUES (1,'Bentang Pustaka','Yogyakarta','089111110000','2026-04-25 22:38:18','2026-04-26 08:17:58'),(3,'Kawah Media',NULL,NULL,'2026-04-26 08:35:10','2026-04-26 08:35:10');
 /*!40000 ALTER TABLE `penerbit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -146,7 +146,7 @@ CREATE TABLE `penulis` (
   `id_penulis` int(11) NOT NULL AUTO_INCREMENT,
   `nama_penulis` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id_penulis`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -155,7 +155,7 @@ CREATE TABLE `penulis` (
 
 LOCK TABLES `penulis` WRITE;
 /*!40000 ALTER TABLE `penulis` DISABLE KEYS */;
-INSERT INTO `penulis` VALUES (1,'James Clear.'),(2,'Andrea Hirata');
+INSERT INTO `penulis` VALUES (1,'James Clear.'),(2,'Andrea Hirata'),(4,'Skysphire');
 /*!40000 ALTER TABLE `penulis` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -171,7 +171,7 @@ CREATE TABLE `rak` (
   `nama_rak` varchar(100) NOT NULL,
   `keterangan` varchar(100) NOT NULL,
   PRIMARY KEY (`id_rak`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -202,7 +202,7 @@ CREATE TABLE `users` (
   `status` enum('aktif','nonaktif') DEFAULT 'aktif',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=30 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -211,7 +211,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (20,'beckah ','peckham@gmal.com','beckham','$2y$10$VMrKAxPCckaumLVNlLl3k.3UDk85MLZyzU9mV9B8WQAzII0Ig557W','anggota','1776715443_9e34ffb2a1484ec59eca.jpg','aktif','2026-04-20 20:04:03'),(21,'panjatjay','purnamapanji459@gmail.com','panji','$2y$10$FVCb2YD6Ye7r7ULKOmMgtOo0XE9WT9lxrezXbQEg4ycKNavzuRK.6','admin','1776968352_e6a4e7664983c8599a07.jpg','aktif','2026-04-21 04:53:30'),(22,'pedri gozales','pedri@gmail.com','pedri','$2y$10$RQiJCm6ew/MZFhiGBXH5yemStoW93ZXkCXF2QjB4vxc4gWxk1POVS','petugas','1776747389_04e65016d54268bfec02.jpg','aktif','2026-04-21 04:56:29'),(23,'pau cubarsi','cubarsi@gmail.com','cubarsi','$2y$10$9Hv3MtAGzG3YZQYeQPTneeVFv0aCvgbA6PwinNcPC/vzu2fwIiyiG','anggota','1776791161_a8a66079fda09614ac9f.jpg','aktif','2026-04-21 17:06:01'),(27,'lamine yamale','yamal@gmail.com','lamine','$2y$10$RhwPeEiBorXOV9.ojlk0eOUKXRqK/2VE5JDfEynv5W.AwxTNG6pT6','anggota','1776927324_ed3599ac79e4282a213c.jpg','aktif','2026-04-23 06:55:24'),(28,'bojan hodak','bojan@gmail.com','bojan','$2y$10$KeT7Wq.NDDVtgCyCyptCWemASLQLizwBIzBUF0nWOoNlOWyLQU72e','anggota','1776927885_89ea7c2a06b23554086b.jpg','aktif','2026-04-23 07:04:45'),(29,'neneng niar','','niar','$2y$10$EDHGPyVWyuBUIJkp.3xFy.wtGTzWPmk40Bi55djvh/wt.So11PEHe','anggota','1777115526_a0a053f061c547f7135e.jpg','aktif','2026-04-25 11:08:42');
+INSERT INTO `users` VALUES (20,'beckah ','peckham@gmal.com','beckham','$2y$10$VMrKAxPCckaumLVNlLl3k.3UDk85MLZyzU9mV9B8WQAzII0Ig557W','anggota','1776715443_9e34ffb2a1484ec59eca.jpg','aktif','2026-04-20 20:04:03'),(21,'panjatjay','purnamapanji459@gmail.com','panji','$2y$10$FVCb2YD6Ye7r7ULKOmMgtOo0XE9WT9lxrezXbQEg4ycKNavzuRK.6','admin','1776968352_e6a4e7664983c8599a07.jpg','aktif','2026-04-21 04:53:30'),(22,'pedri gozales','pedri@gmail.com','pedri','$2y$10$RQiJCm6ew/MZFhiGBXH5yemStoW93ZXkCXF2QjB4vxc4gWxk1POVS','petugas','1776747389_04e65016d54268bfec02.jpg','aktif','2026-04-21 04:56:29'),(23,'pau cubarsi','cubarsi@gmail.com','cubarsi','$2y$10$9Hv3MtAGzG3YZQYeQPTneeVFv0aCvgbA6PwinNcPC/vzu2fwIiyiG','anggota','1776791161_a8a66079fda09614ac9f.jpg','aktif','2026-04-21 17:06:01'),(27,'lamine yamale','yamal@gmail.com','lamine','$2y$10$RhwPeEiBorXOV9.ojlk0eOUKXRqK/2VE5JDfEynv5W.AwxTNG6pT6','anggota','1776927324_ed3599ac79e4282a213c.jpg','aktif','2026-04-23 06:55:24'),(28,'bojan hodak','bojan@gmail.com','bojan','$2y$10$KeT7Wq.NDDVtgCyCyptCWemASLQLizwBIzBUF0nWOoNlOWyLQU72e','anggota','1776927885_89ea7c2a06b23554086b.jpg','aktif','2026-04-23 07:04:45'),(29,'neneng niar','','niar','$2y$10$EDHGPyVWyuBUIJkp.3xFy.wtGTzWPmk40Bi55djvh/wt.So11PEHe','anggota','1777115526_a0a053f061c547f7135e.jpg','aktif','2026-04-25 11:08:42'),(30,'roby',NULL,'yayat','$2y$10$ycsCeLKkJsTQpCMFUKkOa.AywYXEEtDKPWmpntlpKEODtpY.y.yOW','anggota','default.jpg','aktif','2026-04-26 09:44:46');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -224,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-26 14:37:52
+-- Dump completed on 2026-04-26 17:34:25
