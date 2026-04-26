@@ -82,7 +82,7 @@ class Buku extends BaseController
         ')
             ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left')
             ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
-            ->join('penerbit', 'penerbit.id_penerbit = buku.id_penerbit', 'left')
+            ->join('penerbit', 'penerbit.id = buku.id_penerbit', 'left')
             ->join('rak', 'rak.id_rak = buku.id_rak', 'left')
             ->where('buku.id_book', $id)
             ->get()
@@ -141,13 +141,13 @@ class Buku extends BaseController
     public function delete($id)
     {
         $buku = $this->bukuModel->find($id);
-        // Proteksi agar file gambar ikut terhapus di folder img
-        if ($buku['sampul'] != 'default_cover.jpg' && file_exists('img/' . $buku['sampul'])) {
+
+        if ($buku && $buku['sampul'] != 'default_cover.jpg' && file_exists('img/' . $buku['sampul'])) {
             unlink('img/' . $buku['sampul']);
         }
 
         $this->bukuModel->delete($id);
-        return redirect()->to('/buku');
+        return redirect()->to('/buku')->with('pesan', 'Buku berhasil dihapus');
     }
 
     // 8. Cetak Data

@@ -22,7 +22,7 @@ class Home extends BaseController
             'title'          => 'Dashboard',
             'total_buku'     => $bukuModel->countAllResults(),
             'total_user'     => $userModel->countAllResults(),
-            'total_pinjam'   => $pinjamModel->countAllResults(), // Sesuaikan dengan nama di view kamu
+            'total_pinjam' => $pinjamModel->where('status', 'Dipinjam')->countAllResults(),
             'total_kategori' => $kategoriModel->countAllResults(),
             'all_books'      => $bukuModel->findAll(8),
         ];

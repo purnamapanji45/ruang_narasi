@@ -42,7 +42,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // ======================
     $routes->get('profile', 'Users::profile');
 
-    // SETTING (FIX)
     $routes->get('setting', 'Setting::index');
     $routes->post('setting/update', 'Setting::update');
     $routes->post('setting/password', 'Setting::password');
@@ -54,8 +53,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->group('anggota', function ($routes) {
         $routes->get('/', 'Anggota::index');
         $routes->get('pinjaman_saya', 'Anggota::pinjaman_saya');
-
-        // BAYAR USER
         $routes->get('bayar/(:num)', 'Peminjaman::halaman_bayar_user/$1');
     });
 
@@ -75,10 +72,43 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     // ADMIN + PETUGAS
     // ==========================
     $routes->group('', ['filter' => 'role:admin,petugas'], function ($routes) {
-        $routes->get('kategori', 'Kategori::index');
-        $routes->get('penulis', 'Penulis::index');
-        $routes->get('penerbit', 'Penerbit::index');
-        // ===================
+
+        // ======================
+        // KATEGORI (🔥 TAMBAHAN)
+        // ======================
+        $routes->group('kategori', function ($routes) {
+            $routes->get('/', 'Kategori::index');
+            $routes->get('create', 'Kategori::create');
+            $routes->post('store', 'Kategori::store');
+            $routes->get('edit/(:num)', 'Kategori::edit/$1');
+            $routes->post('update/(:num)', 'Kategori::update/$1');
+            $routes->get('delete/(:num)', 'Kategori::delete/$1');
+        });
+
+        // ======================
+        // PENULIS (🔥 TAMBAHAN)
+        // ======================
+        $routes->group('penulis', function ($routes) {
+            $routes->get('/', 'Penulis::index');
+            $routes->get('create', 'Penulis::create');
+            $routes->post('store', 'Penulis::store');
+            $routes->get('edit/(:num)', 'Penulis::edit/$1');
+            $routes->post('update/(:num)', 'Penulis::update/$1');
+            $routes->post('users/delete/(:num)', 'Users::delete/$1');
+        });
+
+        // ======================
+        // PENERBIT (🔥 TAMBAHAN)
+        // ======================
+        $routes->group('penerbit', function ($routes) {
+            $routes->get('/', 'Penerbit::index');
+            $routes->get('create', 'Penerbit::create');
+            $routes->post('store', 'Penerbit::store');
+            $routes->get('edit/(:num)', 'Penerbit::edit/$1');
+            $routes->post('update/(:num)', 'Penerbit::update/$1');
+            $routes->get('delete/(:num)', 'Penerbit::delete/$1');
+        });
+
         // ======================
         // RAK
         // ======================
@@ -92,7 +122,6 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
             $routes->get('delete/(:num)', 'Rak::delete/$1');
         });
 
-
         // ======================
         // BUKU
         // ======================
@@ -103,22 +132,20 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
             $routes->get('detail/(:num)', 'Buku::detail/$1');
             $routes->get('edit/(:num)', 'Buku::edit/$1');
             $routes->post('update/(:num)', 'Buku::update/$1');
-            $routes->delete('delete/(:num)', 'Buku::delete/$1');
+            $routes->post('delete/(:num)', 'Buku::delete/$1');
         });
-
 
         // ======================
         // USERS
         // ======================
-        $routes->group('users', ['filter' => 'auth'], function ($routes) {
-            $routes->get('/', 'Users::index');              // list user
-            $routes->get('create', 'Users::create');        // form tambah user
-            $routes->post('store', 'Users::store');         // simpan user baru
-            $routes->get('edit/(:num)', 'Users::edit/$1');  // form edit
-            $routes->post('update/(:num)', 'Users::update/$1'); // update data
-
+        $routes->group('users', function ($routes) {
+            $routes->get('/', 'Users::index');
+            $routes->get('create', 'Users::create');
+            $routes->post('store', 'Users::store');
+            $routes->get('edit/(:num)', 'Users::edit/$1');
+            $routes->post('update/(:num)', 'Users::update/$1');
+            $routes->post('delete/(:num)', 'Users::delete/$1');
         });
-
 
         // ======================
         // PEMINJAMAN (ADMIN)
@@ -135,11 +162,9 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
 
             $routes->get('nota/(:num)', 'Peminjaman::cetak_nota/$1');
 
-            // BAYAR ADMIN
             $routes->get('bayar/(:num)', 'Peminjaman::bayar/$1');
             $routes->post('proses_bayar/(:num)', 'Peminjaman::proses_bayar/$1');
         });
-
 
         // ======================
         // LAPORAN

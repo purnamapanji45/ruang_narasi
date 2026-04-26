@@ -28,12 +28,23 @@ class Anggota extends BaseController
 
         $total_pinjam = $this->pinjamModel
             ->where('id_user', $id)
+            ->where('status !=', 'kembali') // Gunakan huruf kecil sesuai database
+            ->countAllResults();
+        $total_pinjam = $this->pinjamModel
+            ->where('id_user', $id)
+            ->whereNotIn('status', ['Kembali', 'kembali'])
             ->countAllResults();
 
+        // Tambahkan ini untuk tes:
+        $sudah_kembali = $this->pinjamModel
+            ->where('id_user', $id)
+            ->where('status', 'kembali')
+            ->countAllResults();
         $pinjaman = $this->pinjamModel
             ->select('peminjaman.*, buku.judul, buku.sampul')
             ->join('buku', 'buku.id_book = peminjaman.id_book')
             ->where('peminjaman.id_user', $id)
+            ->where('peminjaman.status !=', 'kembali')
             ->orderBy('peminjaman.id_peminjaman', 'DESC')
             ->findAll();
 

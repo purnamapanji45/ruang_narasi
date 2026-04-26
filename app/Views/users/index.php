@@ -32,7 +32,7 @@
                 </div>
                 <div class="col-md-auto d-flex gap-2">
                     <button type="submit" class="btn btn-dark px-4">Cari</button>
-                    <a href="<?= base_url('users') ?>" class="btn btn-outline-danger" title="Reset Pencarian">
+                    <a href="<?= base_url('users') ?>" class="btn btn-outline-danger">
                         <i class="fas fa-undo"></i>
                     </a>
                 </div>
@@ -41,9 +41,8 @@
     </div>
 
     <?php if (session()->getFlashdata('success')) : ?>
-        <div class="alert alert-success border-0 shadow-sm mb-4 d-flex align-items-center" role="alert">
-            <i class="fas fa-check-circle me-2 fs-5"></i>
-            <div><?= session()->getFlashdata('success') ?></div>
+        <div class="alert alert-success border-0 shadow-sm mb-4">
+            <?= session()->getFlashdata('success') ?>
         </div>
     <?php endif; ?>
 
@@ -69,46 +68,51 @@
                                     <div class="d-flex align-items-center">
                                         <?php
                                         $fotoPath = 'uploads/users/' . $u['foto'];
-                                        $linkFoto = (!empty($u['foto']) && file_exists(FCPATH . $fotoPath)) ? base_url($fotoPath) : base_url('img/default.jpg');
+                                        $linkFoto = (!empty($u['foto']) && file_exists(FCPATH . $fotoPath))
+                                            ? base_url($fotoPath)
+                                            : base_url('img/default.jpg');
                                         ?>
-                                        <img src="<?= $linkFoto ?>" class="rounded-3 me-3 shadow-sm" width="45" height="45" style="object-fit: cover; border: 2px solid #eee;">
+                                        <img src="<?= $linkFoto ?>" class="rounded-3 me-3 shadow-sm" width="45" height="45">
                                         <div>
                                             <div class="fw-bold text-dark"><?= $u['nama'] ?></div>
-                                            <small class="text-muted" style="font-size: 0.75rem;"><?= $u['email'] ?></small>
+                                            <small class="text-muted"><?= $u['email'] ?></small>
                                         </div>
                                     </div>
                                 </td>
-                                <td><span class="badge bg-soft-secondary text-dark border-0 py-2 px-3 rounded-pill" style="background-color: #f8f9fa;">@<?= $u['username'] ?></span></td>
+                                <td>@<?= $u['username'] ?></td>
                                 <td>
-                                    <span class="badge px-3 py-2 rounded-pill <?= $u['role'] == 'admin' ? 'bg-danger' : 'bg-primary' ?>" style="font-size: 0.7rem;">
+                                    <span class="badge <?= $u['role'] == 'admin' ? 'bg-danger' : 'bg-primary' ?>">
                                         <?= strtoupper($u['role']) ?>
                                     </span>
                                 </td>
                                 <td>
-                                    <div class="d-flex align-items-center text-<?= $u['status'] == 'aktif' ? 'success' : 'danger' ?> fw-bold small">
-                                        <i class="fas fa-circle me-1" style="font-size: 0.5rem;"></i> <?= ucfirst($u['status']) ?>
-                                    </div>
+                                    <span class="text-<?= $u['status'] == 'aktif' ? 'success' : 'danger' ?>">
+                                        <?= ucfirst($u['status']) ?>
+                                    </span>
                                 </td>
+
+                                <!-- 🔥 BAGIAN YANG DIPERBAIKI -->
                                 <td class="text-center">
-                                    <div class="d-flex justify-content-center gap-2">
-                                        <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="btn btn-sm btn-light border text-primary rounded-3">
-                                            <i class="fas fa-pen-nib"></i>
-                                        </a>
-                                        <a href="<?= base_url('users/delete/' . $u['id']) ?>"
-                                            class="btn btn-sm btn-light border text-danger rounded-3"
-                                            onclick="return confirm('Hapus data ini dari sistem es?')"
-                                            style="transition: 0.3s;">
-                                            <i class="far fa-trash-alt"></i>
-                                        </a>
-                                    </div>
+                                    <a href="<?= base_url('users/edit/' . $u['id']) ?>" class="btn btn-sm btn-primary">
+                                        Edit
+                                    </a>
+
+                                    <!-- DELETE PAKAI POST -->
+                                    <form action="<?= base_url('users/delete/' . $u['id']) ?>" method="post" style="display:inline;">
+                                        <?= csrf_field() ?>
+                                        <button type="submit" class="btn btn-sm btn-danger"
+                                            onclick="return confirm('Yakin hapus data ini?')">
+                                            Hapus
+                                        </button>
+                                    </form>
                                 </td>
+
                             </tr>
                         <?php endforeach;
                     else : ?>
                         <tr>
-                            <td colspan="6" class="text-center py-5">
-                                <img src="https://cdn-icons-png.flaticon.com/512/7486/7486744.png" width="80" class="mb-3 opacity-25">
-                                <p class="text-muted">Data yang kamu cari gak ketemu es!</p>
+                            <td colspan="6" class="text-center py-4 text-muted">
+                                Data tidak ditemukan
                             </td>
                         </tr>
                     <?php endif; ?>

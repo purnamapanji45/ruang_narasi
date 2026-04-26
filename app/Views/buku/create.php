@@ -42,14 +42,17 @@
 
                 <!-- PENERBIT -->
                 <div class="col-md-6 mb-3">
-                    <label>Penerbit</label>
-                    <select name="id_penerbit" class="form-control" required>
+                    <label for="id_penerbit" class="form-label">Penerbit</label>
+
+                    <select name="id_penerbit" id="id_penerbit" class="form-control" required>
                         <option value="">-- Pilih Penerbit --</option>
+
                         <?php foreach ($penerbit as $p) : ?>
-                            <option value="<?= $p['id_penerbit'] ?>">
-                                <?= $p['nama_penerbit'] ?>
+                            <option value="<?= $p['id'] ?>">
+                                <?= esc($p['nama_penerbit']) ?>
                             </option>
                         <?php endforeach; ?>
+
                     </select>
                 </div>
 

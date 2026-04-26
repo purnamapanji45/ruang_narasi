@@ -51,14 +51,13 @@
                     <select name="id_penerbit" class="form-control" required>
                         <option value="">-- Pilih Penerbit --</option>
                         <?php foreach ($penerbit as $p) : ?>
-                            <option value="<?= $p['id_penerbit'] ?>"
-                                <?= $p['id_penerbit'] == $buku['id_penerbit'] ? 'selected' : '' ?>>
+                            <option value="<?= $p['id'] ?>"
+                                <?= $p['id'] == $buku['id_penerbit'] ? 'selected' : '' ?>>
                                 <?= $p['nama_penerbit'] ?>
                             </option>
                         <?php endforeach; ?>
                     </select>
                 </div>
-
                 <!-- RAK -->
                 <div class="col-md-6 mb-3">
                     <label>Rak</label>
