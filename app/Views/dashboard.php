@@ -162,7 +162,7 @@
             <div class="col-12 text-center py-5">
                 <div class="p-5 bg-white rounded-4 shadow-sm">
                     <i class="bi bi-emoji-frown text-muted fs-1"></i>
-                    <p class="text-muted mt-3">Belum ada koleksi buku es, ayo tambah dulu!</p>
+                    <p class="text-muted mt-3">Belum ada koleksi buku, ayo tambah dulu!</p>
                 </div>
             </div>
         <?php endif; ?>
