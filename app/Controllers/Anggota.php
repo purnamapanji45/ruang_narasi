@@ -35,7 +35,6 @@ class Anggota extends BaseController
             ->whereNotIn('status', ['Kembali', 'kembali'])
             ->countAllResults();
 
-        // Tambahkan ini untuk tes:
         $sudah_kembali = $this->pinjamModel
             ->where('id_user', $id)
             ->where('status', 'kembali')
