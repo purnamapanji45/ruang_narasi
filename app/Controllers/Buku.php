@@ -2,12 +2,7 @@
 
 namespace App\Controllers;
 
-// WAJIB ADA: Pemanggil Model agar tidak merah lagi es!
 use App\Models\BukuModel;
-use App\Models\KategoriModel;
-use App\Models\PenulisModel;
-use App\Models\PenerbitModel;
-use App\Models\RakModel;
 
 class Buku extends BaseController
 {
@@ -15,42 +10,59 @@ class Buku extends BaseController
 
     public function __construct()
     {
-        // Inisialisasi model utama
         $this->bukuModel = new BukuModel();
     }
 
-    // 1. Menampilkan Semua Buku
+    // ✅ 1. TAMPILKAN BUKU + STATUS PINJAM USER
     public function index()
     {
-        $data = [
-            'title'       => 'Daftar Buku',
-            'daftar_buku' => $this->bukuModel->getBukuLengkap(),
-        ];
+        $db = \Config\Database::connect();
+        $id_user = session()->get('id');
+        $keyword = $this->request->getGet('keyword');
+
+        $builder = $db->table('buku')
+            ->select('buku.*, penulis.nama_penulis, peminjaman.status as status_peminjaman')
+            // 🔥 WAJIB TAMBAH JOIN PENULIS DI BAWAH INI
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
+            ->join('penerbit', 'penerbit.id = buku.id_penerbit', 'left')
+            ->join(
+                'peminjaman',
+                'peminjaman.id_book = buku.id_book AND peminjaman.id_user = ' . ($id_user ?? 0),
+                'left'
+            );
+
+        if (!empty($keyword)) {
+            $builder->like('buku.judul', $keyword);
+        }
+
+        $data['daftar_buku'] = $builder->get()->getResultArray();
+        $data['title'] = 'Daftar Buku';
+
         return view('buku/index', $data);
     }
-
-    // 2. Form Tambah Buku
+    // ✅ 2. FORM TAMBAH
     public function create()
     {
         $db = \Config\Database::connect();
 
-        $data['kategori'] = $db->table('kategori')->get()->getResultArray();
-        $data['penulis'] = $db->table('penulis')->get()->getResultArray();
-        $data['penerbit'] = $db->table('penerbit')->get()->getResultArray();
-        $data['rak'] = $db->table('rak')->get()->getResultArray();
-
-        return view('buku/create', $data);
+        return view('buku/create', [
+            'kategori' => $db->table('kategori')->get()->getResultArray(),
+            'penulis'  => $db->table('penulis')->get()->getResultArray(),
+            'penerbit' => $db->table('penerbit')->get()->getResultArray(),
+            'rak'      => $db->table('rak')->get()->getResultArray(),
+        ]);
     }
 
-    // 3. Simpan Buku Baru (POST)
+    // ✅ 3. SIMPAN
     public function store()
     {
-        $fileSampul = $this->request->getFile('sampul');
-        if ($fileSampul->getError() == 4) {
-            $namaSampul = 'default_cover.jpg';
+        $file = $this->request->getFile('sampul');
+
+        if ($file->getError() == 4) {
+            $nama = 'default_cover.jpg';
         } else {
-            $namaSampul = $fileSampul->getRandomName();
-            $fileSampul->move('img', $namaSampul);
+            $nama = $file->getRandomName();
+            $file->move('img', $nama);
         }
 
         $this->bukuModel->save([
@@ -61,25 +73,19 @@ class Buku extends BaseController
             'id_rak'       => $this->request->getPost('id_rak'),
             'tahun_terbit' => $this->request->getPost('tahun_terbit'),
             'stok'         => $this->request->getPost('stok'),
-            'sampul'       => $namaSampul
+            'sampul'       => $nama
         ]);
 
-        return redirect()->to('/buku')->with('pesan', 'Buku berhasil ditambah es!');
+        return redirect()->to('/buku')->with('pesan', 'Buku berhasil ditambah!');
     }
 
-    // 4. Detail Buku
+    // ✅ 4. DETAIL
     public function detail($id)
     {
         $db = \Config\Database::connect();
 
         $data['buku'] = $db->table('buku')
-            ->select('
-            buku.*, 
-            kategori.nama_kategori, 
-            penulis.nama_penulis, 
-            penerbit.nama_penerbit, 
-            rak.nama_rak
-        ')
+            ->select('buku.*, kategori.nama_kategori, penulis.nama_penulis, penerbit.nama_penerbit, rak.nama_rak')
             ->join('kategori', 'kategori.id_kategori = buku.id_kategori', 'left')
             ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
             ->join('penerbit', 'penerbit.id = buku.id_penerbit', 'left')
@@ -91,35 +97,34 @@ class Buku extends BaseController
         return view('buku/detail', $data);
     }
 
-    // 5. Form Edit Buku
+    // ✅ 5. EDIT
     public function edit($id)
     {
         $db = \Config\Database::connect();
 
-        $data['buku'] = $db->table('buku')->where('id_book', $id)->get()->getRowArray();
-
-        $data['kategori'] = $db->table('kategori')->get()->getResultArray();
-        $data['penulis'] = $db->table('penulis')->get()->getResultArray();
-        $data['penerbit'] = $db->table('penerbit')->get()->getResultArray();
-        $data['rak'] = $db->table('rak')->get()->getResultArray();
-
-        return view('buku/edit', $data);
+        return view('buku/edit', [
+            'buku'     => $db->table('buku')->where('id_book', $id)->get()->getRowArray(),
+            'kategori' => $db->table('kategori')->get()->getResultArray(),
+            'penulis'  => $db->table('penulis')->get()->getResultArray(),
+            'penerbit' => $db->table('penerbit')->get()->getResultArray(),
+            'rak'      => $db->table('rak')->get()->getResultArray(),
+        ]);
     }
 
-    // 6. Update Data (POST)
+    // ✅ 6. UPDATE
     public function update($id)
     {
-        $fileSampul = $this->request->getFile('sampul');
-        $bukuLama = $this->bukuModel->find($id);
+        $file = $this->request->getFile('sampul');
+        $lama = $this->bukuModel->find($id);
 
-        if ($fileSampul->getError() == 4) {
-            $namaSampul = $this->request->getPost('sampulLama');
+        if ($file->getError() == 4) {
+            $nama = $this->request->getPost('sampulLama');
         } else {
-            $namaSampul = $fileSampul->getRandomName();
-            $fileSampul->move('img', $namaSampul);
-            // Hapus file lama jika bukan default
-            if ($bukuLama['sampul'] != 'default_cover.jpg' && file_exists('img/' . $bukuLama['sampul'])) {
-                unlink('img/' . $bukuLama['sampul']);
+            $nama = $file->getRandomName();
+            $file->move('img', $nama);
+
+            if ($lama['sampul'] != 'default_cover.jpg' && file_exists('img/' . $lama['sampul'])) {
+                unlink('img/' . $lama['sampul']);
             }
         }
 
@@ -131,13 +136,13 @@ class Buku extends BaseController
             'id_rak'       => $this->request->getPost('id_rak'),
             'tahun_terbit' => $this->request->getPost('tahun_terbit'),
             'stok'         => $this->request->getPost('stok'),
-            'sampul'       => $namaSampul
+            'sampul'       => $nama
         ]);
 
         return redirect()->to('/buku')->with('pesan', 'Data berhasil diupdate!');
     }
 
-    // 7. Hapus Buku
+    // ✅ 7. DELETE
     public function delete($id)
     {
         $buku = $this->bukuModel->find($id);
@@ -147,15 +152,15 @@ class Buku extends BaseController
         }
 
         $this->bukuModel->delete($id);
-        return redirect()->to('/buku')->with('pesan', 'Buku berhasil dihapus');
+
+        return redirect()->to('/buku')->with('pesan', 'Buku berhasil dihapus!');
     }
 
-    // 8. Cetak Data
+    // ✅ 8. PRINT
     public function print()
     {
-        $data = [
+        return view('buku/print', [
             'daftar_buku' => $this->bukuModel->findAll()
-        ];
-        return view('buku/print', $data);
+        ]);
     }
 }

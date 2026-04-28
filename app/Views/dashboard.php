@@ -139,7 +139,14 @@
 
                             <div class="d-grid">
                                 <?php if ($b['stok'] > 0) : ?>
-                                    <a href="<?= base_url('buku/detail/' . $b['id_book']) ?>"
+
+                                    <?php
+                                    $url = (session()->get('role') == 'anggota')
+                                        ? 'katalog/detail/'
+                                        : 'buku/detail/';
+                                    ?>
+
+                                    <a href="<?= base_url($url . $b['id_book']) ?>"
                                         class="btn btn-pinjam rounded-pill py-2 fw-bold">
                                         LIHAT DETAIL
                                     </a>

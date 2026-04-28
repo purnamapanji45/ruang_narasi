@@ -211,45 +211,23 @@ class Peminjaman extends BaseController
     }
     public function bayar($id)
     {
-        $pinjam = $this->pinjamModel
-            ->select('peminjaman.*, users.nama as nama_peminjam, buku.judul')
+        $db = \Config\Database::connect();
+
+        // Pastikan key-nya adalah 'pinjam'
+        $data['pinjam'] = $db->table('peminjaman')
+            ->select('peminjaman.*, users.nama as nama_peminjam, buku.judul, penulis.nama_penulis')
             ->join('users', 'users.id = peminjaman.id_user')
             ->join('buku', 'buku.id_book = peminjaman.id_book')
-            ->find($id);
+            ->join('penulis', 'penulis.id_penulis = buku.id_penulis', 'left')
+            ->where('id_peminjaman', $id)
+            ->get()->getRowArray();
 
-        if (!$pinjam) {
-            return redirect()->to('/peminjaman')->with('error', 'Data tidak ditemukan');
+        if (!$data['pinjam']) {
+            return redirect()->to('/peminjaman/index_anggota')->with('error', 'Data tidak ditemukan');
         }
 
-        $tgl_kembali = new \DateTime($pinjam['tanggal_kembali']);
-        $tgl_sekarang = new \DateTime(date('Y-m-d'));
-
-        $denda = 0;
-        if ($tgl_sekarang > $tgl_kembali) {
-            $selisih = $tgl_sekarang->diff($tgl_kembali)->days;
-            $denda = $selisih * 2000;
-        }
-
-        return view('peminjaman/bayar', [
-            'title' => 'Pembayaran Denda',
-            'pinjam' => $pinjam,
-            'denda' => $denda
-        ]);
-    }
-
-    public function proses_bayar($id)
-    {
-        // Update status denda atau langsung selesaikan peminjaman
-        $this->pinjamModel->update($id, [
-            'status' => 'kembali'
-        ]);
-
-        // Tambah stok buku kembali
-        $pinjam = $this->pinjamModel->find($id);
-        $buku = $this->bukuModel->find($pinjam['id_book']);
-        $this->bukuModel->update($pinjam['id_book'], ['stok' => $buku['stok'] + 1]);
-
-        return redirect()->to('/peminjaman')->with('pesan', 'Denda lunas dan buku dikembalikan!');
+        // Mengirim $data ke view
+        return view('Anggota/bayar_denda', $data);
     }
     public function upload_bukti($id)
     {
@@ -335,5 +313,24 @@ class Peminjaman extends BaseController
         ];
 
         return view('users/profile', $data);
+    }
+    public function setujui_bayar($id)
+    {
+        $db = \Config\Database::connect();
+
+        // 1. Cek apakah data ada
+        $cek = $db->table('peminjaman')->where('id_peminjaman', $id)->get()->getRow();
+
+        if ($cek) {
+            // 2. Update status jadi kembali dan denda jadi 0
+            $db->table('peminjaman')->where('id_peminjaman', $id)->update([
+                'status' => 'kembali',
+                'denda'  => 0
+            ]);
+
+            return redirect()->back()->with('pesan', 'Pembayaran tunai berhasil dikonfirmasi dan denda lunas!');
+        } else {
+            return redirect()->back()->with('error', 'Data tidak ditemukan!');
+        }
     }
 }

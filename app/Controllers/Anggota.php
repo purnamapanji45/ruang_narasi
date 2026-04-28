@@ -26,10 +26,7 @@ class Anggota extends BaseController
     {
         $id = session()->get('id');
 
-        $total_pinjam = $this->pinjamModel
-            ->where('id_user', $id)
-            ->where('status !=', 'kembali') // Gunakan huruf kecil sesuai database
-            ->countAllResults();
+        // --- LOGIKA LAMA (TETAP DIPERTAHANKAN) ---
         $total_pinjam = $this->pinjamModel
             ->where('id_user', $id)
             ->whereNotIn('status', ['Kembali', 'kembali'])
@@ -39,6 +36,7 @@ class Anggota extends BaseController
             ->where('id_user', $id)
             ->where('status', 'kembali')
             ->countAllResults();
+
         $pinjaman = $this->pinjamModel
             ->select('peminjaman.*, buku.judul, buku.sampul')
             ->join('buku', 'buku.id_book = peminjaman.id_book')
@@ -46,15 +44,22 @@ class Anggota extends BaseController
             ->where('peminjaman.status !=', 'kembali')
             ->orderBy('peminjaman.id_peminjaman', 'DESC')
             ->findAll();
+        // ------------------------------------------
+
+        // --- LOGIKA BARU UNTUK CEK STATUS BUKU REKOMENDASI ---
+        // Kita ambil buku terbaru, tapi kita JOIN ke tabel pinjam untuk tahu statusnya bagi user ini
+        $buku_rekomendasi = $this->bukuModel
+            ->select('buku.*, peminjaman.status as status_peminjaman')
+            ->join('peminjaman', "peminjaman.id_book = buku.id_book AND peminjaman.id_user = '$id'", 'left')
+            ->orderBy('buku.id_book', 'DESC')
+            ->first();
 
         return view('Anggota/dashboard', [
             'title'            => 'Dashboard Anggota',
             'total_buku'       => $this->bukuModel->countAll(),
             'total_pinjam'     => $total_pinjam,
             'total_kategori'   => $this->kategoriModel->countAll(),
-            'buku_rekomendasi' => $this->bukuModel
-                ->orderBy('id_book', 'DESC')
-                ->first(),
+            'buku_rekomendasi' => $buku_rekomendasi, // Sekarang data ini punya info 'status_peminjaman'
             'pinjaman'         => $pinjaman
         ]);
     }

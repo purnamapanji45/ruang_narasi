@@ -26,23 +26,30 @@
     </div>
 
     <!-- SEARCH + FILTER -->
-    <div class="card p-3 mb-3 shadow-sm border-0">
-        <div class="row g-2">
-            <div class="col-md-4">
-                <input type="text" class="form-control" placeholder="🔍 Cari judul buku...">
-            </div>
-            <div class="col-md-3">
-                <select class="form-select">
-                    <option>Semua Penulis</option>
-                </select>
-            </div>
-            <div class="col-md-2">
-                <button class="btn btn-primary w-100">
-                    Cari
-                </button>
+    <form method="get" action="<?= base_url('index.php/katalog') ?>">
+        <div class="card p-3 mb-3 shadow-sm border-0">
+            <div class="row g-2">
+
+                <div class="col-md-4">
+                    <input type="text" name="keyword" class="form-control"
+                        placeholder="🔍 Cari judul buku...">
+                </div>
+
+                <div class="col-md-3">
+                    <select name="penulis" class="form-select">
+                        <option value="">Semua Penulis</option>
+                    </select>
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary w-100">
+                        Cari
+                    </button>
+                </div>
+
             </div>
         </div>
-    </div>
+    </form>
 
     <!-- TABLE CARD -->
     <div class="card shadow-sm border-0 rounded-4">
@@ -92,49 +99,69 @@
 
                                 <!-- Aksi -->
                                 <td class="text-center">
-
                                     <div class="d-flex justify-content-center gap-1 flex-wrap">
 
-                                        <!-- Detail -->
-                                        <a href="<?= base_url('buku/detail/' . $b['id_book']) ?>"
-                                            class="btn btn-sm btn-outline-dark">
-                                            <i class="bi bi-eye"></i>
-                                        </a>
+                                        <div class="d-flex justify-content-center gap-1 flex-wrap">
 
-                                        <!-- ADMIN -->
-                                        <?php if (in_array(session()->get('role'), ['admin', 'petugas'])) : ?>
+                                            <!-- Detail -->
+                                            <?php if (session()->get('role') == 'anggota') : ?>
 
-                                            <a href="<?= base_url('buku/edit/' . $b['id_book']) ?>"
-                                                class="btn btn-sm btn-warning text-white">
-                                                <i class="bi bi-pencil"></i>
-                                            </a>
+                                                <a href="<?= base_url('katalog/detail/' . $b['id_book']) ?>"
+                                                    class="btn btn-sm btn-outline-dark">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
 
-                                            <form action="<?= base_url('buku/delete/' . $b['id_book']) ?>"
-                                                method="post"
-                                                class="d-inline"
-                                                onsubmit="return confirm('Yakin hapus buku ini?')">
+                                            <?php else : ?>
 
-                                                <?= csrf_field(); ?>
+                                                <a href="<?= base_url('buku/detail/' . $b['id_book']) ?>"
+                                                    class="btn btn-sm btn-outline-dark">
+                                                    <i class="bi bi-eye"></i>
+                                                </a>
 
-                                                <button type="submit" class="btn btn-danger btn-sm">
-                                                    <i class="bi bi-trash"></i>
-                                                </button>
-                                            </form>
+                                            <?php endif; ?>
+                                            <!-- ADMIN -->
+                                            <?php if (in_array(session()->get('role'), ['admin', 'petugas'])) : ?>
 
-                                        <?php endif; ?>
+                                                <a href="<?= base_url('buku/edit/' . $b['id_book']) ?>"
+                                                    class="btn btn-sm btn-warning text-white">
+                                                    <i class="bi bi-pencil"></i>
+                                                </a>
 
-                                        <!-- ANGGOTA -->
-                                        <?php if (session()->get('role') == 'anggota') : ?>
+                                                <form action="<?= base_url('buku/delete/' . $b['id_book']) ?>"
+                                                    method="post"
+                                                    class="d-inline"
+                                                    onsubmit="return confirm('Yakin hapus buku ini?')">
 
-                                            <a href="<?= base_url('peminjaman/ajukan/' . $b['id_book']); ?>"
-                                                class="btn btn-success btn-sm">
-                                                Pinjam
-                                            </a>
+                                                    <?= csrf_field(); ?>
 
-                                        <?php endif; ?>
+                                                    <button type="submit" class="btn btn-danger btn-sm">
+                                                        <i class="bi bi-trash"></i>
+                                                    </button>
+                                                </form>
 
-                                    </div>
+                                            <?php endif; ?>
 
+                                            <?php if (session()->get('role') == 'anggota') : ?>
+
+                                                <?php if (!empty($b['status_peminjaman']) && $b['status_peminjaman'] == 'diajukan') : ?>
+                                                    <button class="btn btn-warning btn-sm" disabled>
+                                                        Sedang diajukan
+                                                    </button>
+
+                                                <?php elseif ($b['status_peminjaman'] == 'Dipinjam') : ?>
+                                                    <button class="btn btn-primary btn-sm" disabled>
+                                                        Sedang dipinjam
+                                                    </button>
+
+                                                <?php else : ?>
+                                                    <a href="<?= base_url('peminjaman/ajukan/' . $b['id_book']); ?>"
+                                                        class="btn btn-success btn-sm">
+                                                        Pinjam
+                                                    </a>
+                                                <?php endif; ?>
+
+                                            <?php endif; ?>
+                                        </div>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

@@ -3,7 +3,6 @@
 
 <div class="container-fluid">
 
-    <!-- HEADER -->
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
         <h1 class="h3 mb-0 text-gray-800">Daftar Peminjaman</h1>
         <a href="<?= base_url('peminjaman/create'); ?>" class="btn btn-primary shadow-sm">
@@ -11,7 +10,6 @@
         </a>
     </div>
 
-    <!-- FLASH MESSAGE -->
     <?php if (session()->getFlashdata('pesan')) : ?>
         <div class="alert alert-success alert-dismissible fade show">
             <?= session()->getFlashdata('pesan'); ?>
@@ -19,14 +17,12 @@
         </div>
     <?php endif; ?>
 
-    <!-- TABLE -->
     <div class="card shadow mb-4">
         <div class="card-body">
 
             <div class="table-responsive">
                 <table class="table table-bordered table-hover">
 
-                    <!-- THEAD -->
                     <thead class="table-dark text-center">
                         <tr>
                             <th>No</th>
@@ -40,7 +36,6 @@
                         </tr>
                     </thead>
 
-                    <!-- TBODY -->
                     <tbody>
                         <?php $i = 1;
                         foreach ($pinjam as $p) : ?>
@@ -70,18 +65,18 @@
                                     <?= date('d/m/Y', strtotime($p['tanggal_kembali'])); ?>
                                 </td>
 
-                                <!-- STATUS -->
                                 <td class="text-center">
                                     <?php if ($p['status'] == 'diajukan') : ?>
                                         <span class="badge bg-warning text-dark">Diajukan</span>
                                     <?php elseif ($p['status'] == 'dipinjam') : ?>
                                         <span class="badge bg-primary">Dipinjam</span>
+                                    <?php elseif ($p['status'] == 'diproses') : ?>
+                                        <span class="badge bg-info">Menunggu Konfirmasi</span>
                                     <?php else : ?>
                                         <span class="badge bg-success">Kembali</span>
                                     <?php endif; ?>
                                 </td>
 
-                                <!-- DENDA -->
                                 <td class="text-center">
                                     <?php if ($denda > 0) : ?>
                                         <span class="text-danger fw-bold">
@@ -92,7 +87,6 @@
                                     <?php endif; ?>
                                 </td>
 
-                                <!-- AKSI -->
                                 <td class="text-center">
                                     <div class="d-flex gap-1 justify-content-center">
 
@@ -105,9 +99,9 @@
                                         <?php elseif ($p['status'] == 'dipinjam') : ?>
 
                                             <?php if ($denda > 0) : ?>
-                                                <a href="<?= base_url('peminjaman/bayar/' . $p['id_peminjaman']); ?>"
-                                                    class="btn btn-sm btn-warning">
-                                                    💰 Bayar
+                                                <a href="<?= base_url('peminjaman/setujui_bayar/' . $p['id_peminjaman']); ?>"
+                                                    class="btn btn-sm btn-success">
+                                                    Konfirmasi Bayar
                                                 </a>
                                             <?php else : ?>
                                                 <a href="<?= base_url('peminjaman/selesai/' . $p['id_peminjaman']); ?>"
@@ -119,14 +113,14 @@
                                         <?php endif; ?>
 
                                         <a href="<?= base_url('peminjaman/nota/' . $p['id_peminjaman']); ?>"
-                                            class="btn btn-sm btn-info text-white">
-                                            <i class="bi bi-printer me-3"></i>
+                                            class="btn btn-sm btn-info text-white" target="_blank">
+                                            <i class="fas fa-print"></i>
                                         </a>
 
                                         <a href="<?= base_url('peminjaman/delete/' . $p['id_peminjaman']); ?>"
                                             class="btn btn-sm btn-danger"
                                             onclick="return confirm('Hapus data ini?')">
-                                            <i class="bi bi-trash me-3"></i>
+                                            <i class="fas fa-trash"></i>
                                         </a>
 
                                     </div>

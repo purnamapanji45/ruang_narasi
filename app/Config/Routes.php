@@ -32,7 +32,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     $routes->get('dashboard', 'Home::index');
 
     $routes->get('katalog', 'Buku::index');
-
+    $routes->get('katalog/detail/(:num)', 'Buku::detail/$1');
     /* =========================
     | ANGGOTA
     ========================= */
@@ -68,7 +68,7 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
         // BAYAR
         $routes->get('bayar/(:num)', 'Peminjaman::bayar/$1');
         $routes->post('proses_bayar/(:num)', 'Peminjaman::proses_bayar/$1');
-
+        $routes->get('setujui_bayar/(:num)', 'Peminjaman::setujui_bayar/$1');
         // DELETE (FIX ERROR TERAKHIR)
         $routes->get('delete/(:num)', 'Peminjaman::delete/$1');
     });
@@ -77,7 +77,11 @@ $routes->group('', ['filter' => 'auth'], function ($routes) {
     | ADMIN ONLY
     ========================= */
     $routes->group('', ['filter' => 'role:admin,petugas'], function ($routes) {
-
+        $routes->group('verifikasi', function ($routes) {
+            $routes->get('/', 'Peminjaman::verifikasi');
+            $routes->get('approve/(:num)', 'Peminjaman::approve/$1');
+            $routes->get('reject/(:num)', 'Peminjaman::reject/$1');
+        });
         /* KATEGORI */
         $routes->group('kategori', function ($routes) {
             $routes->get('/', 'Kategori::index');
