@@ -35,7 +35,7 @@ CREATE TABLE `buku` (
   `created_at` datetime DEFAULT NULL,
   `updated_at` datetime DEFAULT NULL,
   PRIMARY KEY (`id_book`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -44,7 +44,7 @@ CREATE TABLE `buku` (
 
 LOCK TABLES `buku` WRITE;
 /*!40000 ALTER TABLE `buku` DISABLE KEYS */;
-INSERT INTO `buku` VALUES (5,'Atomic habit',2,1,1,2,2018,80,'1776968502_5c3d3efdd962cdb3dc8b.jpg','2026-04-21 07:25:52','2026-04-28 10:19:38'),(9,'Bandung After Rain',5,4,3,2,2017,121,'1777192645_5b5489ce27bcc2ce4e2b.jpg','2026-04-26 08:37:25','2026-04-28 10:01:37');
+INSERT INTO `buku` VALUES (5,'Atomic habit',2,1,1,2,2018,80,'1776968502_5c3d3efdd962cdb3dc8b.jpg','2026-04-21 07:25:52','2026-04-28 10:19:38'),(9,'Bandung After Rain',5,4,3,2,2017,121,'1777192645_5b5489ce27bcc2ce4e2b.jpg','2026-04-26 08:37:25','2026-04-28 10:01:37'),(11,'Petualangan di Pulau Robot',2,4,8,2,2024,10,'1777428592_435251be0f73ae349f25.png','2026-04-29 02:09:53','2026-04-29 02:09:53'),(12,'Laut Bercerita',2,1,9,2,2012,12,'1777429019_3015281748b2c01d6336.jpg','2026-04-29 02:15:14','2026-04-29 02:16:59');
 /*!40000 ALTER TABLE `buku` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -122,7 +122,7 @@ CREATE TABLE `penerbit` (
   `created_at` datetime DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,7 +131,7 @@ CREATE TABLE `penerbit` (
 
 LOCK TABLES `penerbit` WRITE;
 /*!40000 ALTER TABLE `penerbit` DISABLE KEYS */;
-INSERT INTO `penerbit` VALUES (1,'Bentang Pustaka','Yogyakarta','089111110000','2026-04-25 22:38:18','2026-04-26 08:17:58'),(3,'Kawah Media','jawah','09999','2026-04-26 08:35:10','2026-04-27 02:54:00');
+INSERT INTO `penerbit` VALUES (1,'Bentang Pustaka','Yogyakarta','0858-6534-2319','2026-04-25 22:38:18','2026-04-29 01:50:19'),(3,'Kawah Media','jawah','0811-811-2131','2026-04-26 08:35:10','2026-04-29 01:51:46'),(8,'Gramedia Pustaka Utama',NULL,NULL,'2026-04-29 02:06:15','2026-04-29 02:06:15'),(9,'Kepustakaan Populer Gramedia (KPG)',NULL,NULL,'2026-04-29 02:13:50','2026-04-29 02:13:50');
 /*!40000 ALTER TABLE `penerbit` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -180,7 +180,7 @@ CREATE TABLE `rak` (
 
 LOCK TABLES `rak` WRITE;
 /*!40000 ALTER TABLE `rak` DISABLE KEYS */;
-INSERT INTO `rak` VALUES (2,'Rak A','SDAFDSFAS'),(3,'Rak B','SDFSDFF');
+INSERT INTO `rak` VALUES (2,'Rak A','Lantai 1, Samping Meja Petugas'),(3,'Rak B','Pojok kanan dekat jendela');
 /*!40000 ALTER TABLE `rak` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +211,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (20,'beckah ','peckham@gmal.com','beckham','$2y$10$VMrKAxPCckaumLVNlLl3k.3UDk85MLZyzU9mV9B8WQAzII0Ig557W','anggota','1776715443_9e34ffb2a1484ec59eca.jpg','aktif','2026-04-20 20:04:03'),(21,'panjatjay','purnamapanji459@gmail.com','panji','$2y$10$FVCb2YD6Ye7r7ULKOmMgtOo0XE9WT9lxrezXbQEg4ycKNavzuRK.6','admin','1776968352_e6a4e7664983c8599a07.jpg','aktif','2026-04-21 04:53:30'),(22,'pedri gozales','pedri@gmail.com','pedri','$2y$10$RQiJCm6ew/MZFhiGBXH5yemStoW93ZXkCXF2QjB4vxc4gWxk1POVS','petugas','1776747389_04e65016d54268bfec02.jpg','aktif','2026-04-21 04:56:29'),(23,'pau cubarsi','cubarsi@gmail.com','cubarsi','$2y$10$9Hv3MtAGzG3YZQYeQPTneeVFv0aCvgbA6PwinNcPC/vzu2fwIiyiG','anggota','1776791161_a8a66079fda09614ac9f.jpg','aktif','2026-04-21 17:06:01'),(27,'lamine yamale','yamal@gmail.com','lamine','$2y$10$RhwPeEiBorXOV9.ojlk0eOUKXRqK/2VE5JDfEynv5W.AwxTNG6pT6','anggota','1776927324_ed3599ac79e4282a213c.jpg','aktif','2026-04-23 06:55:24'),(28,'bojan hodak','bojan@gmail.com','bojan','$2y$10$KeT7Wq.NDDVtgCyCyptCWemASLQLizwBIzBUF0nWOoNlOWyLQU72e','anggota','1776927885_89ea7c2a06b23554086b.jpg','aktif','2026-04-23 07:04:45'),(29,'neneng niar','','niar','$2y$10$EDHGPyVWyuBUIJkp.3xFy.wtGTzWPmk40Bi55djvh/wt.So11PEHe','anggota','1777115526_a0a053f061c547f7135e.jpg','aktif','2026-04-25 11:08:42'),(30,'roby','panji459@gmail.com','yayat','$2y$10$UcOyyqUAFjBMz3Ndk.givewK/IrhF6/FlZYOjpJgWJR4Vl/u2zXhu','petugas','1777257625_5a9824887b01e3e5d2a0.jpg','aktif','2026-04-26 09:44:46');
+INSERT INTO `users` VALUES (20,'beckah ','peckham@gmal.com','beckham','$2y$10$VMrKAxPCckaumLVNlLl3k.3UDk85MLZyzU9mV9B8WQAzII0Ig557W','anggota','1776715443_9e34ffb2a1484ec59eca.jpg','aktif','2026-04-20 20:04:03'),(21,'panjatjay','purnamapanji459@gmail.com','panji','$2y$10$FVCb2YD6Ye7r7ULKOmMgtOo0XE9WT9lxrezXbQEg4ycKNavzuRK.6','admin','1776968352_e6a4e7664983c8599a07.jpg','aktif','2026-04-21 04:53:30'),(22,'pedri gozales','pedri@gmail.com','pedri','$2y$10$RQiJCm6ew/MZFhiGBXH5yemStoW93ZXkCXF2QjB4vxc4gWxk1POVS','petugas','1776747389_04e65016d54268bfec02.jpg','aktif','2026-04-21 04:56:29'),(23,'pau cubarsi','cubarsi@gmail.com','cubarsi','$2y$10$9Hv3MtAGzG3YZQYeQPTneeVFv0aCvgbA6PwinNcPC/vzu2fwIiyiG','anggota','1776791161_a8a66079fda09614ac9f.jpg','aktif','2026-04-21 17:06:01'),(27,'lamine yamale','yamal@gmail.com','lamine','$2y$10$RhwPeEiBorXOV9.ojlk0eOUKXRqK/2VE5JDfEynv5W.AwxTNG6pT6','anggota','1776927324_ed3599ac79e4282a213c.jpg','aktif','2026-04-23 06:55:24'),(28,'bojan hodak','bojan@gmail.com','bojan','$2y$10$KeT7Wq.NDDVtgCyCyptCWemASLQLizwBIzBUF0nWOoNlOWyLQU72e','anggota','1776927885_89ea7c2a06b23554086b.jpg','aktif','2026-04-23 07:04:45'),(30,'roby','panji459@gmail.com','yayat','$2y$10$UcOyyqUAFjBMz3Ndk.givewK/IrhF6/FlZYOjpJgWJR4Vl/u2zXhu','petugas','1777257625_5a9824887b01e3e5d2a0.jpg','aktif','2026-04-26 09:44:46');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -224,4 +224,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2026-04-28 17:19:44
+-- Dump completed on 2026-04-29  9:18:57

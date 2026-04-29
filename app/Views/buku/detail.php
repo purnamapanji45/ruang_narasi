@@ -56,12 +56,6 @@
                         </tr>
                     </table>
 
-                    <div class="mt-4 p-3 bg-light rounded">
-                        <h5>Sinopsis / Deskripsi :</h5>
-                        <p class="text-muted">
-                            <?= $buku['deskripsi'] ?? 'Belum ada deskripsi untuk buku ini.'; ?>
-                        </p>
-                    </div>
 
                     <div class="mt-4 d-grid gap-2 d-md-block">
 
